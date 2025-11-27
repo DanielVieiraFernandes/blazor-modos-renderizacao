@@ -1,0 +1,81 @@
+﻿@page "/noticias"
+
+@*Minha aplicação está definida sem interatividade*@
+
+@*Esses atributos otimizam e reforçam o comportamento SSR: *@
+
+@**********************************************************************@
+@*Usado para páginas SSR (Server-Side Rendering) com dados assíncronos*@
+@* Permite o envio progressivo do HTML gerado *@
+@**********************************************************************@
+@attribute [StreamRendering]
+
+@****************************************************************************************@
+@*Impede que uma página SSR estática seja considerada interativa pelo roteador do Blazor*@
+@* Garante que a página seja tratada sempre como estática sem interatividade *@
+@****************************************************************************************@
+@attribute [ExcludeFromInteractiveRouting]
+
+<h1>Últimas notícias</h1>
+
+@if(noticias == null)
+{
+    <p>Carregando notícias...</p>
+} else
+{
+    <div class="noticias-container">
+        @foreach(var item in noticias)
+        {
+            <article class="noticias-item">
+                <h3>@item.Titulo</h3>
+                <p class="date">@item.DataPublicacao</p>
+                <p>@item.Resumo</p>
+            </article>
+        }
+    </div>
+
+    @*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*@
+    @* O Botão é inoperante nesse modo de interatividade *@
+    @*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*@
+    <button @onclick="HandleClick">Clique</button>
+}
+
+
+@code {
+    List<Noticia>? noticias { get; set; }
+
+    public class Noticia
+    {
+        public string Titulo { get; set; } = string.Empty;
+        public DateTime DataPublicacao { get; set; }
+        public string Resumo { get; set; }
+
+        public Noticia(string titulo, DateTime data, string resumo)
+        {
+            Titulo = titulo;
+            DataPublicacao = data;
+            Resumo = resumo;
+        }
+    }
+
+    private List<Noticia> GetNoticias()
+    {
+        return new List<Noticia>
+        {
+            new Noticia("Blazor 9.0 Lançado!", DateTime.Now.AddDays(-190), "A Miscrosoft anunciou o lançamento do homem."),
+            new Noticia("Blazor 9.0 Lançado!", DateTime.Now.AddDays(-190), "A Miscrosoft anunciou o lançamento do homem."),
+            new Noticia("Blazor 9.0 Lançado!", DateTime.Now.AddDays(-190), "A Miscrosoft anunciou o lançamento do homem."),
+        };
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await Task.Delay(1000);
+        noticias = GetNoticias();
+    }
+
+    private void HandleClick(MouseEventArgs args)
+    {
+        Console.WriteLine("Cliquei no botão");   
+    }
+}

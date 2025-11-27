@@ -1,0 +1,19 @@
+﻿@page "/"
+@rendermode InteractiveServer
+
+<PageTitle>Home</PageTitle>
+
+<h1>Hello, world!</h1>
+
+<p></p>
+<button class="btn btn-danger" @onclick="HandleClick">Clique</button>
+<p></p>
+
+<NavLink href="/noticias">Ir para notícias</NavLink>
+
+@code {
+    private void HandleClick(MouseEventArgs args)
+    {
+        Console.WriteLine("Cliquei no botão");
+    }
+}
