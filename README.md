@@ -33,7 +33,8 @@ Neste modo, o HTML é gerado no servidor e enviado ao navegador. Não há conex�
 // Garante que a página seja tratada como estática, ignorando o router interativo
 @attribute [ExcludeFromInteractiveRouting]
 
-<button @onclick="HandleClick">Clique</button> ```
+<button @onclick="HandleClick">Clique</button>
+```
 
 ### 2. 🖥️ Interactive Server (Blazor Server)
 Toda a lógica roda no servidor. O navegador atua como um "terminal", recebendo atualizações do DOM e enviando eventos via SignalR.
@@ -68,6 +69,7 @@ app.MapRazorComponents<App>()
     .AddInteractiveWebAssemblyRenderMode()
     // Linka o assembly do projeto Client para que o servidor saiba o que enviar
     .AddAdditionalAssemblies(typeof(BlazorWASMDemo.Client._Imports).Assembly);
+```
 
 
 ### 4. 🤖 Interactive Auto (WebAssembly com Fallback para Server)
@@ -77,4 +79,4 @@ Este modo tenta renderizar no cliente via WebAssembly, mas se o navegador não s
 app.MapRazorComponents<App>()
     .AddInteractiveAutoRenderMode()
     .AddAdditionalAssemblies(typeof(BlazorWASMDemo.Client._Imports).Assembly);
-    ```
+```
